@@ -24,7 +24,10 @@ var seedDB = require("./seeds");
 
 /* ================== CONFIG ================= */
 mongoose.set("useFindAndModify", false);
-mongoose.connect("mongodb://localhost:27017/yelp_camp", { useNewUrlParser: true })
+mongoose.set("useNewUrlParser", true);
+mongoose.set('useCreateIndex', true);
+// mongoose.connect("mongodb://localhost:27017/yelp_camp")          // MongoDB Local
+mongoose.connect("mongodb+srv://devguille:gh90ft12j@cluster0-hkgjh.mongodb.net/test?retryWrites=true&w=majority")       // MongoDB Atlas
     .then(()=>{
         console.log("CONNECTED TO DB!");
     }).catch(err=>{
