@@ -26,8 +26,9 @@ var seedDB = require("./seeds");
 mongoose.set("useFindAndModify", false);
 mongoose.set("useNewUrlParser", true);
 mongoose.set('useCreateIndex', true);
-// mongoose.connect("mongodb://localhost:27017/yelp_camp")          // MongoDB Local
-mongoose.connect("mongodb+srv://devguille:gh90ft12j@cluster0-hkgjh.mongodb.net/test?retryWrites=true&w=majority")       // MongoDB Atlas
+
+var url = process.env.DATABASEURL || "mongodb://localhost:27017/yelp_camp";    // If for some reason, the DATABASEURL doesn't exist or something, there is a default value (second part)
+mongoose.connect(url)              // This will separate localhost and mongoDB Atlas databases, so I can't screw it up
     .then(()=>{
         console.log("CONNECTED TO DB!");
     }).catch(err=>{
@@ -43,7 +44,7 @@ app.use(flash());
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
-    secret: "Some text i don't know what to put here",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
 }));
@@ -69,6 +70,6 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 
 /* ================== APP LISTEN ================= */
 var port = process.env.PORT || 3000;
-app.listen (port, function () {
+app.listen (port, process.env.IP, function () {
     console.log("The YelpCamp Server Has Started!");
 });
