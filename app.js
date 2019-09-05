@@ -44,7 +44,7 @@ app.use(flash());
 
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || "supermegasecretuserssessions",         // Fix thix
     resave: false,
     saveUninitialized: false
 }));
